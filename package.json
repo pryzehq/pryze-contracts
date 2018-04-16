@@ -1,0 +1,58 @@
+{
+  "name": "PryzeContracts",
+  "version": "2.0.1",
+  "description": "Pryze Sweepstakes Contracts",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "standard && truffle test",
+    "lint": "standard --fix",
+    "generate-wallet": "node ./utils/generate-wallet.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pryzltd/pryze-contracts.git"
+  },
+  "keywords": [
+    "ethereum"
+  ],
+  "authors": [
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "github.com/pryzltd/pryze-contracts/issues"
+  },
+  "homepage": "github.com/pryzltd/pryze-contracts#readme",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "le_node": "^1.7.1",
+    "moment": "^2.20.1",
+    "pg": "7.4.1",
+    "request": "^2.83.0",
+    "solidity-sha3": "^0.4.1",
+    "truffle-contract": "^3.0.4",
+    "truffle-hdwallet-provider": "0.0.3",
+    "web3": "1.0.0-beta.29"
+  },
+  "devDependencies": {
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "inquirer": "^5.1.0",
+    "standard": "^10.0.2"
+  },
+  "standard": {
+    "globals": [
+      "assert",
+      "it",
+      "before",
+      "beforeEach",
+      "artifacts",
+      "contract",
+      "web3"
+    ]
+  }
+}

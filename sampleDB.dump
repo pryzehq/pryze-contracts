@@ -1,0 +1,376 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.2
+-- Dumped by pg_dump version 9.5.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: juan
+--
+
+CREATE TABLE ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE ar_internal_metadata OWNER TO juan;
+
+--
+-- Name: entries; Type: TABLE; Schema: public; Owner: juan
+--
+
+CREATE TABLE entries (
+    id integer NOT NULL,
+    sweepstake_id bigint,
+    user_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    is_valid boolean DEFAULT true,
+    invalid_reason character varying
+);
+
+
+ALTER TABLE entries OWNER TO juan;
+
+--
+-- Name: entries_id_seq; Type: SEQUENCE; Schema: public; Owner: juan
+--
+
+CREATE SEQUENCE entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE entries_id_seq OWNER TO juan;
+
+--
+-- Name: entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: juan
+--
+
+ALTER SEQUENCE entries_id_seq OWNED BY entries.id;
+
+
+--
+-- Name: last_entries; Type: TABLE; Schema: public; Owner: juan
+--
+
+CREATE TABLE last_entries (
+    entry_id integer,
+    updated_at timestamp without time zone,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE last_entries OWNER TO juan;
+
+--
+-- Name: last_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: juan
+--
+
+CREATE SEQUENCE last_entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE last_entries_id_seq OWNER TO juan;
+
+--
+-- Name: last_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: juan
+--
+
+ALTER SEQUENCE last_entries_id_seq OWNED BY last_entries.id;
+
+
+--
+-- Name: sweepstakes; Type: TABLE; Schema: public; Owner: juan
+--
+
+CREATE TABLE sweepstakes (
+    id integer NOT NULL,
+    name character varying,
+    description character varying,
+    sponsor character varying,
+    start_date timestamp without time zone,
+    end_date timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    winning_entry_id integer,
+    pending_winning_entry_id integer,
+    address character varying
+);
+
+
+ALTER TABLE sweepstakes OWNER TO juan;
+
+--
+-- Name: sweepstakes_id_seq; Type: SEQUENCE; Schema: public; Owner: juan
+--
+
+CREATE SEQUENCE sweepstakes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE sweepstakes_id_seq OWNER TO juan;
+
+--
+-- Name: sweepstakes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: juan
+--
+
+ALTER SEQUENCE sweepstakes_id_seq OWNED BY sweepstakes.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: juan
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    email character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    name character varying,
+    wallet character varying
+);
+
+
+ALTER TABLE users OWNER TO juan;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: juan
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE users_id_seq OWNER TO juan;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: juan
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: juan
+--
+
+ALTER TABLE ONLY entries ALTER COLUMN id SET DEFAULT nextval('entries_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: juan
+--
+
+ALTER TABLE ONLY last_entries ALTER COLUMN id SET DEFAULT nextval('last_entries_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: juan
+--
+
+ALTER TABLE ONLY sweepstakes ALTER COLUMN id SET DEFAULT nextval('sweepstakes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: juan
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: ar_internal_metadata; Type: TABLE DATA; Schema: public; Owner: juan
+--
+
+COPY ar_internal_metadata (key, value, created_at, updated_at) FROM stdin;
+environment	production	2017-10-29 21:27:02.474219	2017-10-29 21:27:02.474219
+\.
+
+
+--
+-- Data for Name: entries; Type: TABLE DATA; Schema: public; Owner: juan
+--
+
+COPY entries (id, sweepstake_id, user_id, created_at, updated_at, is_valid, invalid_reason) FROM stdin;
+\.
+
+
+--
+-- Name: entries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: juan
+--
+
+SELECT pg_catalog.setval('entries_id_seq', 42, true);
+
+
+--
+-- Data for Name: last_entries; Type: TABLE DATA; Schema: public; Owner: juan
+--
+
+COPY last_entries (entry_id, updated_at, id) FROM stdin;
+\.
+
+
+--
+-- Name: last_entries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: juan
+--
+
+SELECT pg_catalog.setval('last_entries_id_seq', 3, true);
+
+
+--
+-- Data for Name: sweepstakes; Type: TABLE DATA; Schema: public; Owner: juan
+--
+
+COPY sweepstakes (id, name, description, sponsor, start_date, end_date, created_at, updated_at, winning_entry_id, pending_winning_entry_id, address) FROM stdin;
+1	Sample Sweepstakes	Win some Prizes	sample	2018-05-10 13:00:00	2018-05-12 13:00:00	2018-05-10 01:19:23.936	2018-05-10 01:19:27.812	\N	\N	\N
+\.
+
+
+--
+-- Name: sweepstakes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: juan
+--
+
+SELECT pg_catalog.setval('sweepstakes_id_seq', 9, true);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: juan
+--
+
+COPY users (id, email, created_at, updated_at, name, wallet) FROM stdin;
+2	ben@email.com	2018-05-10 01:13:56.918	2018-05-10 01:13:59.759	Ben	0x692eeAC0C640B2FE6B86E296c5bD430DFF494245
+3	charles@email.com	2018-05-10 01:15:37.693	2018-05-10 01:15:41.36	Charles	0x692eeAC0C640B2FE6B86E296c5bD430DFF494245
+1	ashley@email.com	2018-05-10 01:12:30.92	2018-05-10 01:12:34.15	Ashley	0x692eeAC0C640B2FE6B86E296c5bD430DFF494245
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: juan
+--
+
+SELECT pg_catalog.setval('users_id_seq', 47, true);
+
+
+--
+-- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: juan
+--
+
+ALTER TABLE ONLY ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: entries_pkey; Type: CONSTRAINT; Schema: public; Owner: juan
+--
+
+ALTER TABLE ONLY entries
+    ADD CONSTRAINT entries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: last_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: juan
+--
+
+ALTER TABLE ONLY last_entries
+    ADD CONSTRAINT last_entries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sweepstakes_pkey; Type: CONSTRAINT; Schema: public; Owner: juan
+--
+
+ALTER TABLE ONLY sweepstakes
+    ADD CONSTRAINT sweepstakes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: juan
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_entries_on_sweepstake_id; Type: INDEX; Schema: public; Owner: juan
+--
+
+CREATE INDEX index_entries_on_sweepstake_id ON entries USING btree (sweepstake_id);
+
+
+--
+-- Name: index_entries_on_user_id; Type: INDEX; Schema: public; Owner: juan
+--
+
+CREATE INDEX index_entries_on_user_id ON entries USING btree (user_id);
+
+
+--
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: juan
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: juan
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM juan;
+GRANT ALL ON SCHEMA public TO juan;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
